@@ -1,18 +1,39 @@
 <template>
+  <Header />
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <div class="header-area">
+      <span class="header-text">Notecards</span><br>
+      <span class="sub-text">An better alternative to other study applications.</span><br>
+
+      <button class="button is-large mt-5 get-started" @click="login">Get Started</button>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
-export default defineComponent({
+<script lang="ts">
+import Header from '@/components/Header.vue'
+import { injectAuth } from 'vue-auth0-plugin'
+
+export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    Header
   },
-});
+  setup(){
+    const auth:any = injectAuth();
+
+    const login = () => {
+      auth.loginWithRedirect()
+    }
+
+    return {
+      login
+    }
+  }
+}
 </script>
+
+<style lang="scss" scoped>
+  @import '../styles/Home.scss';
+</style>
