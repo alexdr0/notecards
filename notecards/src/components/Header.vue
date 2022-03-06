@@ -1,7 +1,9 @@
 <template>
     <div class="header">
         <img src="@/assets/Notecards.svg" class="logo" />
-        <button class="button signin" @click="login">Login</button>
+        <button class="button signin" @click="login" v-if="auth.loading == false && !auth.authenticated">Login</button>
+        <button class="button signin" @click="login" v-else-if="auth.loading == true">Login</button>
+        <button class="button signin" v-else-if="auth.loading == false && auth.authenticated">{{ auth.user.nickname }}</button>
     </div>
 </template>
 

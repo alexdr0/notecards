@@ -5,7 +5,16 @@
       <span class="header-text">Notecards</span><br>
       <span class="sub-text">An better alternative to other study applications.</span><br>
 
-      <button class="button is-large mt-5 get-started" @click="login">Get Started</button>
+      <button class="button is-large mt-5 get-started" @click="login" v-if="auth.loading == false && auth.authenticated == false"
+          >Get Started</button>
+      <button class="button is-large mt-5 get-started" @click="login" v-else-if="auth.loading"
+          >Get Started</button>
+      <button class="button is-large mt-5 get-started continue" @click="login" v-else-if="auth.loading == false && auth.authenticated"
+        >Continue as {{ auth.user.nickname }}  <i class="fas fa-arrow-right ml-2"></i>
+      </button>
+      <br><br>
+      <button class="button is-small" v-if="auth.loading == false && auth.authenticated" @click="auth.logout()"
+      >Logout</button>
     </div>
   </div>
 </template>
@@ -28,7 +37,8 @@ export default {
     }
 
     return {
-      login
+      login,
+      auth
     }
   }
 }
